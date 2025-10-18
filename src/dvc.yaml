@@ -1,0 +1,37 @@
+# Data Version Control
+#commands : 1) dvc init, 2) dvc repro, 3) dvc dag(Diagram), 4) dvc metrics show
+stages:
+  data_ingestion:
+    cmd : python MLmodel_In_Stages/data_ingestion.py
+    deps :
+      - MLmodel_In_Stages/data_ingestion.py
+    outs :
+      - data/raw
+
+  data_preprocessing:
+    cmd : python MLmodel_In_Stages/data_preprocessing.py
+    deps :
+      - data/raw
+      - MLmodel_In_Stages/data_preprocessing.py
+
+    outs:
+      - data/processed
+
+  feature_engineering:
+    cmd : python MLmodel_In_Stages/feature_Engineering.py
+    deps :
+      - data/processed
+      - MLmodel_In_Stages/feature_Engineering.py
+
+    outs:
+      -data/features
+
+  model_Building:
+
+  model_Evaluation:
+    cmd : python MLmodel_In_Stages/model_Evaluation.py
+    deps :
+
+    metrics:
+      - metrics.json
+
